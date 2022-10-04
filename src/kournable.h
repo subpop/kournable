@@ -1,23 +1,32 @@
 #ifndef KOURNABLE_H
 #define KOURNABLE_H
 
-#include <QMainWindow>
-#include <QScopedPointer>
+#include <QWidget>
 
 namespace Ui {
-class kournable;
+class Kournable;
 }
 
-class kournable : public QMainWindow
+class Kournable : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit kournable(QWidget *parent = nullptr);
-    ~kournable() override;
+    explicit Kournable(QWidget *parent = nullptr);
+    ~Kournable();
+
+    void clear();
+    void load(QJsonObject json);
+    QJsonObject save();
+    bool isModified();
+    void setModified(bool modified);
+
+signals:
+    void contentsChanged();
 
 private:
-    QScopedPointer<Ui::kournable> m_ui;
+    Ui::Kournable *ui;
+    void handleDocumentChanges();
 };
 
 #endif // KOURNABLE_H
